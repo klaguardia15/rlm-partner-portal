@@ -1,0 +1,141 @@
+<template>
+    <div class="bar">
+        <lightning-button
+            variant="brand"
+            label="Place Call-Off Order"
+            title="Place a call-off order from this agreement at contracted prices"
+            onclick={openWizard}
+            disabled={isDisabled}
+        ></lightning-button>
+    </div>
+
+    <template if:true={showWizard}>
+        <div class="backdrop" onclick={handleBackdrop}></div>
+        <div
+            class="dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="zebra-qq-title"
+            tabindex="-1"
+            onkeydown={handleKeydown}
+        >
+            <div class="dialog-head">
+                <h2 id="zebra-qq-title">Place Call-Off Order</h2>
+                <button class="close" type="button" aria-label="Close Place Call-Off Order" onclick={closeWizard}>
+                    Close
+                </button>
+            </div>
+
+            <template if:true={errorMessage}>
+                <p class="banner" role="alert">{errorMessage}</p>
+            </template>
+
+            <template if:true={isDateStep}>
+                <p class="lede">Pick the call-off date. Products from that schedule period appear next.</p>
+                <label class="field">
+                    <span>Order date</span>
+                    <input type="date" value={orderDate} onchange={handleDateChange} />
+                </label>
+                <div class="actions">
+                    <button class="btn-primary" type="button" onclick={loadProducts} disabled={isBusy}>
+                        Next
+                    </button>
+                </div>
+            </template>
+
+            <template if:true={isProductStep}>
+                <p class="lede">
+                    Set the kit quantity once. Included SKUs stay in the bundle at the contracted price for this
+                    period.
+                </p>
+                <template if:true={hasGroups}>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <input
+                                            type="checkbox"
+                                            checked={allSelected}
+                                            onchange={toggleAll}
+                                            aria-label="Select all products"
+                                        />
+                                    </th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Period</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={displayRows} for:item="row">
+                                    <tr key={row.key} class={row.rowClass}>
+                                        <td>
+                                            <template if:true={row.showCheckbox}>
+                                                <input
+                                                    type="checkbox"
+                                                    data-group-key={row.groupKey}
+                                                    checked={row.selected}
+                                                    onchange={toggleGroup}
+                                                    aria-label={row.productName}
+                                                />
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="product">
+                                                <span>{row.productName}</span>
+                                                <template if:true={row.kitHint}>
+                                                    <span class="kit-hint">{row.kitHint}</span>
+                                                </template>
+                                            </div>
+                                        </td>
+                                        <td>{row.periodDisplay}</td>
+                                        <td>
+                                            <template if:true={row.showQtyInput}>
+                                                <input
+                                                    class="qty"
+                                                    type="number"
+                                                    min="1"
+                                                    max={row.maxQuantity}
+                                                    step="1"
+                                                    value={row.quantity}
+                                                    data-group-key={row.groupKey}
+                                                    onchange={handleQtyChange}
+                                                    aria-label="Kit quantity"
+                                                />
+                                            </template>
+                                            <template if:false={row.showQtyInput}>
+                                                <span class="qty-readonly">{row.qtyDisplay}</span>
+                                            </template>
+                                        </td>
+                                        <td class="net">{row.priceDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                <template if:true={showEmptyLines}>
+                    <p class="banner">No scheduled products for that date. Try a date inside the agreement term.</p>
+                </template>
+                <div class="actions">
+                    <button class="btn-secondary" type="button" onclick={backToDate} disabled={isBusy}>
+                        Back
+                    </button>
+                    <button class="btn-primary" type="button" onclick={createOrder} disabled={createDisabled}>
+                        Place order
+                    </button>
+                </div>
+            </template>
+
+            <template if:true={isDoneStep}>
+                <p class="lede">Call-off order created at the contracted price. Actuals will post back to this agreement.</p>
+                <p class="order-id">{orderId}</p>
+                <div class="actions">
+                    <button class="btn-secondary" type="button" onclick={closeWizard}>Close</button>
+                    <button class="btn-primary" type="button" onclick={openOrder}>Open order</button>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,233 @@
+<template>
+    <div class="page">
+        <template if:true={errorMessage}>
+            <p class="empty" role="alert">{errorMessage}</p>
+        </template>
+
+        <template if:true={showLoading}>
+            <p class="empty">Loading quote…</p>
+        </template>
+
+        <template if:true={hasQuote}>
+            <header class="hero">
+                <p class="crumb">Partner Hub / Configure &amp; Quote</p>
+                <h1>Configure &amp; Quote</h1>
+                <p class="lede">
+                    Select a catalog, add products to this quote, then check out at list price
+                    or request a price concession when you need an exception.
+                </p>
+            </header>
+
+            <div class="layout">
+                <section class="main">
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <p class="eyebrow">Product catalogs</p>
+                                <h2>Select a catalog, then browse products</h2>
+                            </div>
+                            <button class="btn-primary" type="button" onclick={browseCatalogs} disabled={browseDisabled}>
+                                Browse Catalogs
+                            </button>
+                        </div>
+                        <p class="hint">
+                            Choose Hardware, Software, or Services, then browse that catalog.
+                            Add the products you need and set quantity before you save.
+                        </p>
+                        <div class="catalogs" role="list">
+                            <template for:each={catalogCards} for:item="catalog">
+                                <button
+                                    key={catalog.key}
+                                    class={catalog.cardClass}
+                                    type="button"
+                                    data-name={catalog.name}
+                                    onclick={selectCatalog}
+                                >
+                                    <span class="catalog-name">{catalog.name}</span>
+                                    <span class="catalog-hint">{catalog.subtitle}</span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-head">
+                            <div>
+                                <p class="eyebrow">Configuration</p>
+                                <h2>{quoteTitle}</h2>
+                            </div>
+                            <button class="btn-secondary" type="button" onclick={refresh}>Refresh</button>
+                        </div>
+                        <template if:true={hasLines}>
+                            <template for:each={groups} for:item="group">
+                                <div key={group.name} class="group">
+                                    <div class="group-head">
+                                        <h3>{group.name}</h3>
+                                        <span class="net">{group.netDisplay}</span>
+                                    </div>
+                                    <ul>
+                                        <template for:each={group.lines} for:item="line">
+                                            <li key={line.id} class={line.rowClass}>
+                                                <span class="prod">
+                                                    <span class="prod-name">{line.productName}</span>
+                                                    <span class="prod-sku">{line.sku}</span>
+                                                    <template if:true={line.isParent}>
+                                                        <button
+                                                            class="btn-link"
+                                                            type="button"
+                                                            onclick={browseCatalogs}
+                                                        >
+                                                            Edit configuration
+                                                        </button>
+                                                    </template>
+                                                </span>
+                                                <template if:true={line.isParent}>
+                                                    <label class="qty-field">
+                                                        <span class="qty-label">Qty</span>
+                                                        <input
+                                                            class="qty-input"
+                                                            type="number"
+                                                            min="1"
+                                                            step="1"
+                                                            data-id={line.id}
+                                                            value={line.qtyDisplay}
+                                                            disabled={qtySaving}
+                                                            onchange={handleParentQty}
+                                                        />
+                                                    </label>
+                                                </template>
+                                                <template if:false={line.isParent}>
+                                                    <span class="qty">{line.qtyDisplay}</span>
+                                                </template>
+                                                <span class="list">{line.listDisplay}</span>
+                                                <span class="net">{line.netDisplay}</span>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:false={hasLines}>
+                            <p class="empty inner">
+                                No products on this quote yet. Select a catalog and click Browse Catalogs to add products.
+                            </p>
+                        </template>
+                    </div>
+                </section>
+
+                <aside class="rail" aria-label="Partner quote summary">
+                    <div class="rail-card">
+                        <div class="rail-head">
+                            <p class="eyebrow">Partner Quote Summary</p>
+                        </div>
+                        <dl>
+                            <div>
+                                <dt>Customer</dt>
+                                <dd>{accountName}</dd>
+                            </div>
+                            <div>
+                                <dt>Solution</dt>
+                                <dd>{solutionName}</dd>
+                            </div>
+                            <div>
+                                <dt>Status</dt>
+                                <dd><span class={statusClass}>{statusLabel}</span></dd>
+                            </div>
+                            <div>
+                                <dt>Created</dt>
+                                <dd>{createdDisplay}</dd>
+                            </div>
+                            <div>
+                                <dt>Quote number</dt>
+                                <dd>{quoteNumber}</dd>
+                            </div>
+                        </dl>
+                        <p class="total-label">One Time Total</p>
+                        <p class="total">{totalDisplay}</p>
+                        <div class="rail-actions">
+                            <button class="btn-secondary wide" type="button" onclick={saveQuote}>Save Quote</button>
+                            <button class="btn-ghost wide" type="button" onclick={checkout}>Check out</button>
+                            <button class="btn-primary wide" type="button" onclick={openConcession} disabled={concessionDone}>
+                                Request price concession
+                            </button>
+                        </div>
+                        <template if:true={concessionDone}>
+                            <p class="sent">Request sent to deal desk. List price stays until they apply the exception.</p>
+                        </template>
+                    </div>
+                    <div class="help-card">
+                        <p class="eyebrow">How to use this quote</p>
+        <p>Browse a catalog to add products. After they are on the quote, set quantity on the kit header — child lines follow. Edit configuration reopens the catalog.</p>
+                    </div>
+                </aside>
+            </div>
+        </template>
+    </div>
+
+    <template if:true={showConcession}>
+        <div class="backdrop" onclick={handleBackdrop}></div>
+        <div
+            class="dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="zebra-pc-title"
+            tabindex="-1"
+            onkeydown={handleKeydown}
+        >
+            <div class="dialog-head">
+                <h2 id="zebra-pc-title">Request price concession</h2>
+                <button class="close" type="button" aria-label="Close request price concession" onclick={closeConcession}>
+                    Close
+                </button>
+            </div>
+            <p class="hint">
+                Tell deal desk what you need, the quantity, and why list price will not work.
+                They review this quote — it is not a one-way email.
+            </p>
+            <label class="field">
+                <span>Message to deal desk</span>
+                <textarea
+                    data-id="pc-justification"
+                    rows="6"
+                    oninput={handleJustification}
+                    placeholder="Describe the products, quantity, and the exception you need…"
+                ></textarea>
+            </label>
+            <template if:true={concessionError}>
+                <p class="dialog-error" role="alert">{concessionError}</p>
+            </template>
+            <div class="dialog-actions">
+                <button class="btn-secondary" type="button" onclick={closeConcession} disabled={submitting}>Cancel</button>
+                <button class="btn-primary" type="button" onclick={submitConcession} disabled={submitting}>
+                    {sendLabel}
+                </button>
+            </div>
+        </div>
+    </template>
+
+    <template if:true={showCatalog}>
+        <div class="backdrop"></div>
+        <div
+            class="dialog catalog-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="zebra-catalog-title"
+            tabindex="-1"
+            onkeydown={handleCatalogKeydown}
+        >
+            <div class="dialog-head">
+                <h2 id="zebra-catalog-title">Browse catalogs</h2>
+                <button class="close" type="button" aria-label="Close browse catalogs" onclick={closeCatalog}>
+                    Close
+                </button>
+            </div>
+            <div class="catalog-body">
+                <lightning-flow
+                    flow-api-name="RLM_DiscoverProducts"
+                    flow-input-variables={flowInputVariables}
+                    onstatuschange={handleFlowStatus}
+                ></lightning-flow>
+            </div>
+        </div>
+    </template>
+</template>

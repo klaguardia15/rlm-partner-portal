@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessMappings>
+        <accessLevel>Read</accessLevel>
+        <object>SalesAgreement</object>
+        <objectField>Account</objectField>
+        <userField>Contact.Account</userField>
+    </accessMappings>
+    <name>Partner Account Sales Agreements</name>
+    <profiles>RLM Custom Partner Community User</profiles>
+</SharingSet>

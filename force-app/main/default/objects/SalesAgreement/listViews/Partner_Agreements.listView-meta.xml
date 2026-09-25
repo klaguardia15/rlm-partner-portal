@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Agreements</fullName>
+    <columns>Name</columns>
+    <columns>Account</columns>
+    <columns>Status</columns>
+    <columns>StartDate</columns>
+    <columns>ScheduleFrequency</columns>
+    <columns>TotalAgreementAmount</columns>
+    <filterScope>Everything</filterScope>
+    <label>My Agreements</label>
+</ListView>

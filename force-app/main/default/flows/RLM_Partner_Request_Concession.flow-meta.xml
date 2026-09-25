@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Submit_Request</name>
+        <label>Submit Request</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <actionName>RLM_PartnerAgreements</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Check_Result</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>justification</name>
+            <value>
+                <elementReference>Justification</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>quoteId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>RLM_PartnerAgreements</nameSegment>
+        <outputParameters>
+            <assignToReference>SubmitSuccess</assignToReference>
+            <name>isSuccess</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>SubmitError</assignToReference>
+            <name>errorMessage</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>SubmitMessage</assignToReference>
+            <name>message</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Check_Result</name>
+        <label>Check Result</label>
+        <locationX>176</locationX>
+        <locationY>458</locationY>
+        <defaultConnector>
+            <targetReference>Fault_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Failed</defaultConnectorLabel>
+        <rules>
+            <name>Succeeded</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SubmitSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Done_Screen</targetReference>
+            </connector>
+            <label>Succeeded</label>
+        </rules>
+    </decisions>
+    <description>Partner Central screen flow: write the price-concession justification, stamp the partner request, and create a Task for the account owner.</description>
+    <environments>Default</environments>
+    <interviewLabel>Request Price Concession {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Partner Request Price Concession</label>
+    <processType>Flow</processType>
+    <screens>
+        <name>Ask_Justification</name>
+        <label>Request price concession</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Submit_Request</targetReference>
+        </connector>
+        <fields>
+            <name>dspWhy</name>
+            <fieldText>&lt;p&gt;This combined kit is not on your hardware run-rate agreement. Tell deal desk what you need. They work the same Quote — this is not a one-way email.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Justification</name>
+            <fieldText>Message to deal desk</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>Example: Need 18% off this Warehouse Frontline Kit for a 10-device refresh. Combined hardware + Workcloud + OneCare is not on our TC53 run-rate agreement, and Honeywell is quoting the software stack 20% under list.</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <nextOrFinishButtonLabel>Send request</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Done_Screen</name>
+        <label>Request sent</label>
+        <locationX>176</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dspDone</name>
+            <fieldText>&lt;p&gt;deal desk has your request. List price stays on this quote until they apply the exception.&lt;/p&gt;&lt;p&gt;{!SubmitMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Fault_Screen</name>
+        <label>Could not send request</label>
+        <locationX>440</locationX>
+        <locationY>458</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>dspFault</name>
+            <fieldText>&lt;p&gt;The request could not be submitted. Confirm the quote is yours, then try again.&lt;/p&gt;&lt;p&gt;{!SubmitError}&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Ask_Justification</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SubmitSuccess</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SubmitError</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>SubmitMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,153 @@
+<template>
+    <div class="page">
+        <template if:true={errorMessage}>
+            <p class="empty" role="alert">{errorMessage}</p>
+        </template>
+
+        <template if:true={showLoading}>
+            <p class="empty">Loading agreement…</p>
+        </template>
+
+        <template if:true={showMissing}>
+            <p class="empty">This agreement is not available to your account.</p>
+        </template>
+
+        <template if:true={hasAgreement}>
+            <section class="card">
+                <div class="head">
+                    <div>
+                        <p class="eyebrow">Sales Agreement</p>
+                        <h1>{agreement.name}</h1>
+                    </div>
+                    <div class="head-actions">
+                        <span class={statusClass}>{agreement.status}</span>
+                        <c-rlm-zebra-quick-quote
+                            record-id={recordId}
+                            oncalloffcreated={handleCalloffCreated}
+                        ></c-rlm-zebra-quick-quote>
+                    </div>
+                </div>
+
+                <dl class="metrics">
+                    <div>
+                        <dt>Account</dt>
+                        <dd>{agreement.accountName}</dd>
+                    </div>
+                    <div>
+                        <dt>Start Date</dt>
+                        <dd>{startDisplay}</dd>
+                    </div>
+                    <div>
+                        <dt>End Date</dt>
+                        <dd>{endDisplay}</dd>
+                    </div>
+                    <div>
+                        <dt>Schedule</dt>
+                        <dd>{scheduleDisplay}</dd>
+                    </div>
+                    <div>
+                        <dt>Total Agreement Amount</dt>
+                        <dd class="net">{amountDisplay}</dd>
+                    </div>
+                    <div>
+                        <dt>Called off</dt>
+                        <dd>{actualsDisplay}</dd>
+                    </div>
+                    <div>
+                        <dt>Lines</dt>
+                        <dd>{lineCountDisplay}</dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section class="card">
+                <h2>Contracted prices</h2>
+                <p class="lede">Contracted price on this agreement. Place a call-off order; actuals post back here.</p>
+                <template if:true={hasPrices}>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">SKU</th>
+                                    <th scope="col">List</th>
+                                    <th scope="col">Discount</th>
+                                    <th scope="col">Contracted</th>
+                                    <th scope="col">Planned</th>
+                                    <th scope="col">Actuals</th>
+                                    <th scope="col">Remaining</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={priceRows} for:item="row">
+                                    <tr key={row.id}>
+                                        <td>{row.productDisplay}</td>
+                                        <td>{row.skuDisplay}</td>
+                                        <td>{row.listDisplay}</td>
+                                        <td>{row.discountDisplay}</td>
+                                        <td class="net">{row.netDisplay}</td>
+                                        <td>{row.qtyDisplay}</td>
+                                        <td>
+                                            <div class="actual-cell">
+                                                <span>{row.actualDisplay}</span>
+                                                <span class="meter" aria-hidden="true">
+                                                    <span class="meter-fill" style={row.meterStyle}></span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>{row.remainingDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                <template if:true={showPriceEmpty}>
+                    <p class="empty inner">No contracted products on this agreement yet.</p>
+                </template>
+            </section>
+
+            <template if:true={hasOrders}>
+                <section class="card">
+                    <h2>Orders</h2>
+                    <p class="lede">Call-offs placed against this agreement at the contracted price.</p>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Order</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col"><span class="sr-only">Open</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={orderRows} for:item="row">
+                                    <tr key={row.id}>
+                                        <td class="net">{row.orderNumber}</td>
+                                        <td>{row.dateDisplay}</td>
+                                        <td>
+                                            <span class={row.statusClass}>{row.status}</span>
+                                        </td>
+                                        <td class="net">{row.amountDisplay}</td>
+                                        <td>
+                                            <button
+                                                class="link"
+                                                type="button"
+                                                data-id={row.id}
+                                                onclick={openOrder}
+                                            >
+                                                Open
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </template>
+        </template>
+    </div>
+</template>

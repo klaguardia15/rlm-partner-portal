@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_PC_Requests</fullName>
+    <columns>QUOTE.NAME</columns>
+    <columns>QUOTE.STATUS</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>RLM_Partner_Request__c</columns>
+    <columns>RLM_PC_Justification__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RLM_Partner_Request__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Partner PC Requests</label>
+</ListView>

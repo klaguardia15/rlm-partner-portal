@@ -1,0 +1,229 @@
+:host {
+    display: block;
+}
+
+.bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+}
+
+lightning-button {
+    --slds-c-button-brand-color-background: var(--brand-accent, #0176d3);
+    --slds-c-button-brand-color-background-hover: var(--brand-accent-hover, #014486);
+    --slds-c-button-brand-text-color: #111111;
+    --slds-c-button-brand-color-border: var(--brand-accent, #0176d3);
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9000;
+}
+
+.dialog {
+    position: fixed;
+    top: 6vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(820px, 94vw);
+    max-height: 88vh;
+    overflow: auto;
+    background: #ffffff;
+    color: #111111;
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    z-index: 9001;
+    padding: 16px 20px 24px;
+    font-family: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+}
+
+.dialog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.dialog-head h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.close {
+    background: transparent;
+    border: 0;
+    color: #111111;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 8px;
+}
+
+.close:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.lede {
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #5c5f66;
+}
+
+.banner {
+    margin: 0 0 14px;
+    padding: 10px 12px;
+    background: #fff4f4;
+    border: 1px solid #f0d0d0;
+    border-radius: 4px;
+    color: #8a1f11;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #5c5f66;
+}
+
+.field input {
+    max-width: 220px;
+    padding: 8px 10px;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    font: 14px/1.4 "IBM Plex Sans", Arial, Helvetica, sans-serif;
+    color: #111111;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 400;
+}
+
+.wrap {
+    overflow: auto;
+    border: 1px solid #ececec;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #111111;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ececec;
+}
+
+td {
+    font-size: 14px;
+    color: #111111;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.net {
+    font-weight: 600;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    white-space: normal;
+    min-width: 220px;
+}
+
+.kit-hint {
+    font-size: 12px;
+    font-weight: 400;
+    color: #5c5f66;
+}
+
+.kit-parent td {
+    font-weight: 600;
+    background: #fafafa;
+}
+
+.kit-child td {
+    color: #3d3f45;
+}
+
+.kit-child .product {
+    padding-left: 22px;
+}
+
+.qty {
+    width: 72px;
+    padding: 6px 8px;
+    border: 1px solid #c9c9c9;
+    border-radius: 4px;
+    font: 14px/1.4 "IBM Plex Sans", Arial, Helvetica, sans-serif;
+    color: #111111;
+}
+
+.qty-readonly {
+    color: #5c5f66;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.btn-primary,
+.btn-secondary {
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 16px;
+    font: 600 14px/1.2 "IBM Plex Sans", Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--brand-accent, #0176d3);
+    color: #111111;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.btn-secondary {
+    background: #f4f4f4;
+    color: #111111;
+}
+
+.order-id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    color: #111111;
+}

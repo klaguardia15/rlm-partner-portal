@@ -1,0 +1,168 @@
+<template>
+    <div class="pulse">
+        <template if:true={errorMessage}>
+            <p class="empty" role="alert">{errorMessage}</p>
+        </template>
+
+        <template if:true={showEmptyAccount}>
+            <p class="empty">No partner account is linked to this user. Sign in as the partner user to see the pulse.</p>
+        </template>
+
+        <template if:true={hasAccount}>
+            <header class="head">
+                <p class="kicker">My account</p>
+                <h1>{accountName}</h1>
+                <p class="lede">Track what you buy from your supplier — contracted run-rate, call-off orders, and pricing exceptions.</p>
+            </header>
+
+            <div class="kpis">
+                <template for:each={kpis} for:item="kpi">
+                    <div key={kpi.key} class="kpi">
+                        <p class="kpi-label">{kpi.label}</p>
+                        <p class="kpi-value">{kpi.value}</p>
+                        <p class="kpi-hint">{kpi.hint}</p>
+                    </div>
+                </template>
+            </div>
+
+            <div class="drawdown" aria-label="Agreement drawdown">
+                <div class="drawdown-meta">
+                    <span>Agreement actuals vs contracted</span>
+                    <span>{utilizationPct}%</span>
+                </div>
+                <div class="bar">
+                    <span class="bar-fill" style={barStyle}></span>
+                </div>
+            </div>
+
+            <template if:true={hasInsights}>
+                <section class="insights">
+                    <template for:each={insights} for:item="insight">
+                        <article key={insight.key} class="insight">
+                            <p class="insight-kicker">{insight.kicker}</p>
+                            <p>{insight.body}</p>
+                        </article>
+                    </template>
+                </section>
+            </template>
+
+            <section class="block">
+                <div class="block-head">
+                    <h2>Recent orders</h2>
+                    <button class="text-btn" type="button" onclick={goAgreements}>Call off on an agreement</button>
+                </div>
+                <template if:true={hasOrders}>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Order</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={orderRows} for:item="row">
+                                    <tr key={row.id}>
+                                        <td>
+                                            <button class="linkish" data-id={row.id} onclick={openOrder}>
+                                                {row.orderNumber}
+                                            </button>
+                                        </td>
+                                        <td>{row.status}</td>
+                                        <td>{row.dateDisplay}</td>
+                                        <td class="net">{row.amountDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                <template if:false={hasOrders}>
+                    <p class="empty">No orders yet. After a call-off posts, it lands here and on the Sales Agreement actuals.</p>
+                </template>
+            </section>
+
+            <section class="block">
+                <div class="block-head">
+                    <h2>Agreements</h2>
+                    <button class="text-btn" type="button" onclick={goAgreements}>Open My agreements</button>
+                </div>
+                <template if:true={hasAgreements}>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Start</th>
+                                    <th scope="col">Contracted</th>
+                                    <th scope="col">Actuals</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={agreementRows} for:item="row">
+                                    <tr key={row.id}>
+                                        <td>
+                                            <button class="linkish" data-id={row.id} onclick={openAgreement}>
+                                                {row.name}
+                                            </button>
+                                        </td>
+                                        <td>{row.status}</td>
+                                        <td>{row.startDisplay}</td>
+                                        <td>{row.contractedDisplay}</td>
+                                        <td class="net">{row.actualDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                <template if:false={hasAgreements}>
+                    <p class="empty">No agreements yet. After your supplier activates a Sales Agreement, it appears here.</p>
+                </template>
+            </section>
+
+            <section class="block">
+                <div class="block-head">
+                    <h2>Open pricing requests</h2>
+                    <button class="text-btn" type="button" onclick={goQuotes}>Request pricing</button>
+                </div>
+                <template if:true={hasQuotes}>
+                    <div class="wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Quote</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Opened</th>
+                                    <th scope="col">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={quoteRows} for:item="row">
+                                    <tr key={row.id}>
+                                        <td>
+                                            <button class="linkish" data-id={row.id} onclick={openQuote}>
+                                                {row.name}
+                                            </button>
+                                        </td>
+                                        <td>{row.kind}</td>
+                                        <td>{row.status}</td>
+                                        <td>{row.dateDisplay}</td>
+                                        <td class="net">{row.amountDisplay}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                <template if:false={hasQuotes}>
+                    <p class="empty">No open exceptions. Use Request pricing when the SKU set is off the hardware agreement.</p>
+                </template>
+            </section>
+        </template>
+    </div>
+</template>

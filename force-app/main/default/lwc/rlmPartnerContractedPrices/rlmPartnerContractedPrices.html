@@ -1,0 +1,90 @@
+<template>
+    <div class="catalog">
+        <template if:true={errorMessage}>
+            <p class="empty" role="alert">{errorMessage}</p>
+        </template>
+
+        <section class="block">
+            <h2>My agreements</h2>
+            <p class="lede">Activated run-rate agreements you can call off at the contracted price.</p>
+            <template if:true={hasAgreements}>
+                <div class="wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Start</th>
+                                <th scope="col">Frequency</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={agreementRows} for:item="row">
+                                <tr key={row.id}>
+                                    <td>
+                                        <button class="linkish" data-id={row.id} onclick={openAgreement}>
+                                            {row.name}
+                                        </button>
+                                    </td>
+                                    <td>{row.status}</td>
+                                    <td>{row.startDisplay}</td>
+                                    <td>{row.scheduleFrequency}</td>
+                                    <td class="net">{row.amountDisplay}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+            <template if:true={showAgreementEmpty}>
+                <p class="empty">No agreements yet. After your supplier activates a Sales Agreement, it appears here.</p>
+            </template>
+        </section>
+
+        <section class="block">
+            <h2>Contracted prices</h2>
+            <p class="lede">SKU-level sales price, discount, and planned quantity from those agreements.</p>
+            <template if:true={hasPrices}>
+                <div class="wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Agreement</th>
+                                <th scope="col">List</th>
+                                <th scope="col">Discount</th>
+                                <th scope="col">Contracted</th>
+                                <th scope="col">Planned qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={priceRows} for:item="row">
+                                <tr key={row.id}>
+                                    <td>{row.name}</td>
+                                    <td>
+                                        <template if:true={row.agreementId}>
+                                            <button class="linkish" data-id={row.agreementId} onclick={openAgreement}>
+                                                {row.agreementName}
+                                            </button>
+                                        </template>
+                                        <template if:false={row.agreementId}>
+                                            {row.agreementName}
+                                        </template>
+                                    </td>
+                                    <td>{row.listDisplay}</td>
+                                    <td>{row.discountDisplay}</td>
+                                    <td class="net">{row.netDisplay}</td>
+                                    <td>{row.qtyDisplay}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+            <template if:true={showPriceEmpty}>
+                <p class="empty">No contracted prices yet. Activate a Sales Agreement to see contracted prices here.</p>
+            </template>
+        </section>
+    </div>
+</template>

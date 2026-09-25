@@ -1,0 +1,20 @@
+<template>
+    <div class="banner">
+        <div>
+            <p class="eyebrow">Configure &amp; Quote</p>
+            <h2>Start a quote</h2>
+            <p class="lede">
+                Open a draft for your account. Browse catalogs, add products, then check out at list or request a price concession.
+            </p>
+        </div>
+        <button class="btn-primary" type="button" onclick={startQuote} disabled={starting}>
+            Start a quote
+        </button>
+    </div>
+    <template if:true={starting}>
+        <p class="status" role="status">Starting your quote…</p>
+    </template>
+    <template if:true={errorMessage}>
+        <p class="error" role="alert">{errorMessage}</p>
+    </template>
+</template>

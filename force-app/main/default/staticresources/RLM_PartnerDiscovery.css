@@ -1,0 +1,58 @@
+/* Product Discovery on Partner Central: black on white, not lime-on-white.
+   Loaded by rlmPartnerQuote via loadStyle so it applies inside the flow. */
+
+runtime_revenue_products-prd-lst-container,
+runtime_revenue_products-prdLstContainer,
+lightning-flow,
+lightning-overlay-container,
+section.slds-modal,
+.slds-modal {
+  --dxp-g-brand: #111111;
+  --dxp-g-brand-contrast: #ffffff;
+  --dxp-s-link-text-color: #111111;
+  --lwc-brandPrimary: #111111;
+  --lwc-brandAccessible: #111111;
+  --lwc-colorBrand: #111111;
+  --lwc-colorTextBrand: #111111;
+  --lwc-brandTextLink: #111111;
+  --slds-c-button-brand-color-background: #111111;
+  --slds-c-button-brand-text-color: #ffffff;
+  --slds-c-button-outline-brand-color-border: #111111;
+  --slds-c-button-outline-brand-text-color: #111111;
+  --slds-c-icon-color-foreground: #111111;
+  --slds-c-icon-color-foreground-default: #111111;
+  --slds-g-color-brand-base-50: #111111;
+  --slds-g-color-brand-base-60: #333333;
+  --slds-g-color-on-brand: #ffffff;
+}
+
+lightning-flow .slds-button_outline-brand,
+lightning-overlay-container .slds-button_outline-brand,
+.slds-modal .slds-button_outline-brand,
+runtime_revenue_products-prd-lst-container .slds-button_outline-brand {
+  color: #111111 !important;
+  border-color: #111111 !important;
+  background: #ffffff !important;
+}
+
+lightning-flow .slds-button_brand,
+lightning-overlay-container .slds-button_brand,
+.slds-modal .slds-button_brand,
+runtime_revenue_products-prd-lst-container .slds-button_brand {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+lightning-flow a,
+.slds-modal a,
+runtime_revenue_products-prd-lst-container a {
+  color: #111111 !important;
+}
+
+lightning-flow lightning-primitive-icon,
+.slds-modal lightning-primitive-icon,
+runtime_revenue_products-prd-lst-container lightning-primitive-icon {
+  --slds-c-icon-color-foreground: #111111;
+  --slds-c-icon-color-foreground-default: #111111;
+}

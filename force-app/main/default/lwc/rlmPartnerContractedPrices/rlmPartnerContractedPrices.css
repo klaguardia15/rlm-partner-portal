@@ -1,0 +1,94 @@
+:host {
+    display: block;
+    padding: 8px 8px 40px;
+    font-family: "IBM Plex Sans", Arial, Helvetica, sans-serif;
+    color: #111111;
+}
+
+.catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 1100px;
+}
+
+.block h2 {
+    margin: 0 0 4px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #111111;
+}
+
+.lede {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #5c5f66;
+}
+
+.wrap {
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px 14px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #111111;
+    background: #f4f4f4;
+    border-bottom: 1px solid #ececec;
+}
+
+td {
+    font-size: 14px;
+    color: #111111;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.net {
+    font-weight: 600;
+}
+
+.linkish {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: #111111;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+.linkish:hover {
+    color: #333333;
+}
+
+.empty {
+    margin: 0;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    color: #5c5f66;
+    font-size: 14px;
+    line-height: 1.45;
+}

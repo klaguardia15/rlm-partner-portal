@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <description>Partner Central wrapper: accepts a String record Id, loads the Sales Agreement, then runs the MFG Quick Quote (call-off) screen flow.</description>
+    <environments>Default</environments>
+    <interviewLabel>Partner Quick Quote {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Partner Quick Quote</label>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Sales_Agreement</name>
+        <label>Get Sales Agreement</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Run_Call_Off</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Lookup_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SalesAgreement</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Lookup_Error</name>
+        <label>Could not start Quick Quote</label>
+        <locationX>440</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Lookup_Error_Message</name>
+            <fieldText>&lt;p&gt;This agreement could not be loaded for call-off. Confirm it is shared to your account, then try again.&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Sales_Agreement</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Run_Call_Off</name>
+        <label>Run Call Off</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <flowName>RLM_MFG_Sales_Agreement_Order_Execution</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>Get_Sales_Agreement</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

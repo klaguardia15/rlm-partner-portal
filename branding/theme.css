@@ -1,0 +1,897 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap");
+
+/* Partner Central theme. Header, accent, and font tokens are filled by scripts/brand_portal.py. */
+
+:root {
+  --brand-header: {{HEADER}};
+  --brand-on-header: {{ON_HEADER}};
+  --brand-accent: {{ACCENT}};
+  --brand-accent-hover: {{ACCENT_HOVER}};
+  --brand-muted: {{MUTED}};
+  --brand-font: {{FONT}};
+}
+
+html,
+body {
+  font-family: var(--brand-font) !important;
+}
+
+.comm-page-home {
+  color: var(--brand-on-header);
+}
+
+.comm-page-inner {
+  color: #111111;
+}
+
+/* Authenticated pages only. Do not paint .themeLayout / .siteforceContentArea
+   globally — on login those sit inside the Identity card and become the
+   inner black box inside the white frame. */
+.comm-page-home,
+.comm-page-home .siteforceContentArea,
+.comm-page-home .themeLayout,
+.comm-page-home .cb-section_content {
+  background-color: var(--brand-header) !important;
+}
+
+h1, h2, h3, h4, h5, .slds-text-heading_large, .slds-text-heading_medium {
+  font-family: var(--brand-font) !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* ---- Header: website nav (logo + links left, tools right) ---- */
+.themeHeader,
+.themeHeader .themeHeaderInner,
+header.comm-header,
+.comm-navigation,
+.forceCommunityThemeHeader,
+div[class*="prmThemeHeader"] {
+  background: var(--brand-header) !important;
+  background-color: var(--brand-header) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  min-height: 64px;
+}
+
+.themeHeader a,
+.comm-navigation a,
+.forceCommunityThemeHeader a,
+div[class*="prmThemeHeader"] a {
+  color: var(--brand-on-header) !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  font-size: 14px !important;
+}
+
+.themeHeader a:hover,
+.comm-navigation a:hover,
+div[class*="prmThemeHeader"] a:hover {
+  color: var(--brand-accent) !important;
+}
+
+.themeHeader nav a[aria-current="page"],
+.themeHeader [class*="navItem"].slds-is-active > a,
+.themeHeader .slds-is-active > a {
+  color: var(--brand-accent) !important;
+  box-shadow: inset 0 -2px 0 var(--brand-accent);
+}
+
+/* Compact search — white pill, black type. Home page color is white; without
+   these hooks the typed query inherits white-on-white through shadow DOM. */
+.themeHeader,
+header.comm-header,
+.forceCommunityThemeHeader,
+div[class*="prmThemeHeader"] {
+  --slds-c-input-text-color: #111111;
+  --slds-c-input-color-background: #ffffff;
+  --slds-c-input-color-border: rgba(255, 255, 255, 0.35);
+  --slds-c-input-radius-border: 999px;
+  --dxp-s-form-element-text-color: #111111;
+  --dxp-s-text-color: #111111;
+  --lwc-colorTextPlaceholder: #5c5f66;
+}
+
+.themeHeader forcecommunity-global-search-input,
+.themeHeader lightning-input,
+.themeHeader [class*="globalSearch"],
+.themeHeader [class*="GlobalSearch"],
+.themeHeader [class*="global-search"] {
+  max-width: 220px !important;
+  color: #111111 !important;
+}
+
+.themeHeader input,
+.themeHeader .slds-input,
+.themeHeader input[type="search"],
+.themeHeader input[type="text"],
+.themeHeader .slds-combobox__input {
+  background: #ffffff !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  caret-color: #111111 !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 999px !important;
+  height: 36px !important;
+  min-width: 0 !important;
+  max-width: 220px !important;
+}
+
+.themeHeader input::placeholder,
+.themeHeader .slds-input::placeholder {
+  color: #5c5f66 !important;
+  -webkit-text-fill-color: #5c5f66 !important;
+}
+
+/* Instant-result dropdown sits in a portal, often outside .themeHeader.
+   Home page color is white; without this the suggestion chip is lime-on-white
+   or white-on-lime. */
+.themeHeader [role="listbox"],
+.themeHeader [role="option"],
+.themeHeader .slds-dropdown,
+.themeHeader .slds-listbox,
+[class*="globalSearch"] [role="listbox"],
+[class*="globalSearch"] [role="option"],
+[class*="GlobalSearch"] [role="listbox"],
+[class*="GlobalSearch"] [role="option"],
+forcecommunity-global-search-input [role="listbox"],
+forcecommunity-global-search-input [role="option"],
+forcecommunity-global-search-input .slds-dropdown,
+.slds-popover[class*="search"],
+div[class*="instantResult"],
+div[class*="InstantResult"],
+div[class*="searchSuggestion"] {
+  background: #ffffff !important;
+  color: #111111 !important;
+  --lwc-colorTextDefault: #111111;
+  --dxp-s-text-color: #111111;
+  --dxp-g-root-contrast: #111111;
+  --dxp-g-brand: #111111;
+  border-color: #e6e6e6 !important;
+}
+
+.themeHeader [role="option"],
+[class*="globalSearch"] [role="option"],
+[class*="GlobalSearch"] [role="option"],
+forcecommunity-global-search-input [role="option"],
+div[class*="instantResult"] *,
+div[class*="searchSuggestion"] * {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+}
+
+.themeHeader [role="option"]:hover,
+.themeHeader [role="option"][aria-selected="true"],
+[class*="globalSearch"] [role="option"]:hover,
+[class*="globalSearch"] [role="option"][aria-selected="true"],
+forcecommunity-global-search-input [role="option"]:hover,
+forcecommunity-global-search-input [role="option"][aria-selected="true"] {
+  background: #f4f4f4 !important;
+  color: #111111 !important;
+}
+
+/* Search results page (global-search) */
+.comm-page-search,
+.comm-page-global-search,
+.forceCommunitySearch,
+[class*="searchResults"] {
+  color: #111111 !important;
+  --dxp-g-root-contrast: #111111;
+  --dxp-s-text-color: #111111;
+  --dxp-g-brand: #111111;
+  --lwc-colorTextBrand: #111111;
+  --lwc-colorTextDefault: #111111;
+}
+
+.themeHeader [class*="search"] lightning-primitive-icon,
+.themeHeader [class*="search"] .slds-icon {
+  fill: var(--brand-on-header) !important;
+}
+
+/* Register a Deal (+) — lime on black, not white-on-white */
+runtime_sales_prm-action-dropdown-container .slds-button,
+runtime_sales_prm-action-dropdown-container button,
+.themeHeader [class*="actionDropdown"] .slds-button,
+.themeHeader [class*="action-dropdown"] .slds-button,
+.themeHeader [class*="ActionDropdown"] .slds-button {
+  background: var(--brand-accent) !important;
+  background-color: var(--brand-accent) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--brand-header) !important;
+  fill: var(--brand-header) !important;
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  min-width: 2.25rem !important;
+  border-radius: 999px !important;
+}
+
+runtime_sales_prm-action-dropdown-container svg,
+runtime_sales_prm-action-dropdown-container .slds-icon,
+runtime_sales_prm-action-dropdown-container lightning-primitive-icon,
+.themeHeader [class*="actionDropdown"] svg,
+.themeHeader [class*="actionDropdown"] .slds-icon,
+.themeHeader [class*="action-dropdown"] svg {
+  fill: var(--brand-header) !important;
+  color: var(--brand-header) !important;
+  --slds-c-icon-color-foreground: #000000;
+  --slds-c-icon-color-foreground-default: #000000;
+}
+
+.themeHeader [class*="actionDropdown"] .slds-button:hover,
+runtime_sales_prm-action-dropdown-container .slds-button:hover {
+  background: var(--brand-accent-hover) !important;
+}
+
+/* Notifications stay a white icon, not a filled white chip */
+.themeHeader [class*="notification"] .slds-button,
+.themeHeader [class*="Notification"] .slds-button {
+  background: transparent !important;
+  color: var(--brand-on-header) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Inner + record pages: branding TextColor is white for the dark home page.
+   Record detail is not .comm-page-inner, so field values were white-on-white. */
+.comm-page-inner,
+.comm-page-detail,
+.comm-page-record,
+.comm-page-relatedlist,
+.comm-page-list,
+.forceCommunityObjectHome,
+.forceCommunityRecordHeadline,
+.forceCommunityRecordHomeTabs,
+.forceListViewManager,
+.listViewContainer,
+body:not(.comm-page-home):not(.comm-login-page):not(.comm-page-login) {
+  --dxp-g-root: #f4f4f4;
+  --dxp-g-root-contrast: #111111;
+  --dxp-g-brand: #111111;
+  --dxp-g-brand-contrast: #ffffff;
+  --dxp-s-text-color: #111111;
+  --dxp-s-link-text-color: #111111;
+  --dxp-s-form-element-text-color: #111111;
+  --lwc-colorTextBrand: #111111;
+  --lwc-brandTextLink: #111111;
+  --lwc-colorTextDefault: #111111;
+  --lwc-colorTextWeak: #5c5f66;
+  --lwc-brandPrimary: #111111;
+  --slds-g-color-on-brand: #111111;
+  --slds-g-color-on-brand-base-100: #111111;
+  --lwc-colorBackground: #ffffff;
+  --slds-c-card-color-background: #ffffff;
+  color: #111111;
+}
+
+.comm-page-inner .slds-card,
+.comm-page-inner .forceListViewManager,
+.comm-page-inner .listViewContainer,
+.comm-page-inner .ui-widget,
+.forceCommunityObjectHome,
+.forceListViewManagerGrid,
+.forceCommunityRecordHeadline,
+.forceCommunityRecordHomeTabs,
+.slds-page-header,
+.slds-tabs_default,
+.slds-tabs_card {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+}
+
+.slds-form-element__label,
+.slds-page-header .slds-text-title,
+.test-id__field-label {
+  color: #5c5f66 !important;
+}
+
+.slds-form-element__static,
+.test-id__field-value,
+.slds-page-header__detail-row,
+.slds-page-header__detail-block,
+.forceHighlightsStencil,
+lightning-formatted-text,
+lightning-formatted-number,
+lightning-formatted-date-time,
+lightning-formatted-name {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+}
+
+.comm-page-inner a,
+.forceCommunityObjectHome a,
+.forceListViewManager a,
+.slds-dropdown a,
+.slds-listbox__option,
+.slds-page-header__name-meta,
+.slds-page-header__title {
+  color: #111111 !important;
+}
+
+.slds-dropdown,
+.slds-listbox,
+.slds-combobox__dropdown {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+.slds-listbox__option,
+.slds-dropdown__item > a,
+.slds-listbox__option .slds-truncate {
+  color: #111111 !important;
+}
+
+.slds-is-selected,
+.slds-listbox__option.slds-is-selected,
+.slds-listbox__option[aria-selected="true"],
+.slds-dropdown__item.slds-is-selected > a {
+  background: var(--brand-accent) !important;
+  color: #111111 !important;
+}
+
+.slds-listbox__option.slds-is-selected *,
+.slds-listbox__option[aria-selected="true"] *,
+.slds-dropdown__item.slds-is-selected * {
+  color: #111111 !important;
+}
+
+.slds-page-header,
+.slds-page-header__row,
+.forceCommunityObjectHome .slds-page-header {
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+.slds-page-header h1,
+.slds-page-header__title,
+.slds-page-header .slds-text-body_small {
+  color: #111111 !important;
+}
+
+.slds-page-header .slds-button_brand,
+.forceCommunityRecordHeadline .slds-button_brand {
+  background: var(--brand-accent) !important;
+  color: #111111 !important;
+  border: 0 !important;
+  font-weight: 600;
+}
+
+.slds-page-header .slds-button_neutral,
+.forceCommunityRecordHeadline .slds-button_neutral {
+  color: #111111 !important;
+  border-color: #c9c9c9 !important;
+  background: #ffffff !important;
+}
+
+/* Hide the PRM top-row centered CompanyLogo. Paint one wordmark far left. */
+.themeHeader img[src*="file-asset"],
+.themeHeader img[src*="PartnerLogo"],
+.themeHeader img[src*="WeloColor"] {
+  display: none !important;
+}
+
+.comm-login-page img[src*="file-asset"],
+.cb-section_header img[src*="file-asset"] {
+  height: 32px !important;
+  width: auto !important;
+  max-width: 160px !important;
+  object-fit: contain !important;
+  object-position: left center !important;
+  filter: brightness(0) invert(1);
+}
+
+.themeHeader,
+.themeHeader .themeHeaderInner,
+header.comm-header {
+  position: relative !important;
+}
+
+.themeHeader::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 132px;
+  height: 28px;
+  background: url("{{LOGO_URL}}") no-repeat left center;
+  background-size: contain;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.themeHeader nav,
+.themeHeader .comm-navigation,
+.comm-navigation,
+.themeHeader [class*="multiLevelNav"],
+.themeHeader [class*="navigationTabset"],
+.themeHeader [class*="tabset"] {
+  padding-left: 160px !important;
+  justify-content: flex-start !important;
+}
+
+/* Inner list pages: light canvas so Salesforce grids are readable */
+.comm-page-inner .cCenterPanel,
+.comm-page-inner .cb-section_content {
+  background: #f4f4f4 !important;
+  color: #111111;
+}
+
+.brand-list-heading {
+  padding: 28px 8px 12px;
+  font-family: var(--brand-font);
+}
+
+.brand-list-heading h2 {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111111 !important;
+  margin: 0 0 6px;
+}
+
+.comm-page-inner input,
+.comm-page-inner textarea,
+.comm-page-inner .slds-input,
+.comm-page-inner .slds-combobox__input {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  caret-color: #111111 !important;
+  background: #ffffff !important;
+}
+
+.comm-page-inner thead th,
+.comm-page-inner .slds-th__action,
+.comm-page-inner .slds-cell-fixed,
+.comm-page-inner .slds-text-title_caps {
+  background: #f4f4f4 !important;
+  color: #111111 !important;
+}
+
+.comm-page-inner thead th *,
+.comm-page-inner .slds-th__action *,
+.comm-page-inner .slds-cell-fixed * {
+  color: #111111 !important;
+  fill: #111111 !important;
+}
+
+.themeHeader .slds-button_brand,
+.themeHeader button[title="Log in"],
+.themeHeader a[href*="login"] {
+  background: var(--brand-accent) !important;
+  color: var(--brand-header) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.themeHeader .slds-button_brand:hover,
+.themeHeader a[href*="login"]:hover {
+  background: var(--brand-accent-hover) !important;
+  color: var(--brand-header) !important;
+}
+
+/* Primary actions */
+.slds-button_brand,
+button.slds-button_brand,
+.comm-login-page button[type="submit"],
+.uiButton--brand {
+  background: var(--brand-accent) !important;
+  border-color: var(--brand-accent) !important;
+  color: var(--brand-header) !important;
+  border-radius: 999px !important;
+  font-family: var(--brand-font) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+
+.slds-button_brand:hover,
+.comm-login-page button[type="submit"]:hover {
+  background: var(--brand-accent-hover) !important;
+  color: var(--brand-header) !important;
+}
+
+/* Lime only on explicit brand CTAs and home cards — not global anchors. */
+.brand-hero a,
+.brand-card-cta,
+.brand-btn-secondary:hover {
+  color: var(--brand-accent);
+}
+
+/* Hide the old under-header promo if a cached home still has it */
+.brand-promo {
+  display: none !important;
+}
+
+/* ---- Home ---- */
+.brand-home {
+  margin: 0 -16px;
+  font-family: var(--brand-font);
+  background: var(--brand-header);
+  color: var(--brand-on-header);
+}
+
+.brand-hero {
+  background-color: var(--brand-header);
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 42%, rgba(0, 0, 0, 0.08) 100%),
+    url("{{PRIMARY_URL}}");
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  color: var(--brand-on-header);
+  min-height: 560px;
+  padding: 72px 40px 88px;
+  display: flex;
+  align-items: center;
+}
+
+.brand-hero-card {
+  background: rgba(8, 8, 8, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  max-width: 36rem;
+  padding: 40px 36px 36px;
+  backdrop-filter: blur(6px);
+}
+
+.brand-hero-card h1 {
+  font-size: clamp(28px, 4.5vw, 44px);
+  line-height: 1.1;
+  font-weight: 600;
+  margin: 0;
+  color: var(--brand-on-header) !important;
+  letter-spacing: -0.03em;
+}
+
+.brand-hero-rule {
+  border: 0;
+  border-top: 1px solid var(--brand-on-header);
+  width: 48%;
+  margin: 20px 0 20px;
+}
+
+.brand-sub {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--brand-muted);
+  margin: 0 0 28px;
+}
+
+.brand-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.brand-btn-primary,
+.brand-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-radius: 999px;
+}
+
+.brand-btn-primary {
+  background: var(--brand-accent);
+  color: var(--brand-header) !important;
+}
+
+.brand-btn-primary:hover {
+  background: var(--brand-accent-hover);
+  color: var(--brand-header) !important;
+}
+
+.brand-btn-secondary {
+  background: transparent;
+  color: var(--brand-on-header) !important;
+  border: 1px solid var(--brand-on-header);
+}
+
+.brand-btn-secondary:hover {
+  border-color: var(--brand-accent);
+  color: var(--brand-accent) !important;
+}
+
+.brand-btn-arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.brand-mid {
+  background: var(--brand-header);
+  text-align: center;
+  padding: 56px 32px 24px;
+}
+
+.brand-mid h2,
+.brand-close h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--brand-on-header) !important;
+  margin: 0 0 16px;
+}
+
+.brand-mid p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--brand-muted);
+  max-width: 46em;
+  margin: 0 auto;
+}
+
+.brand-cards-wrap {
+  background-color: var(--brand-header);
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.78) 100%),
+    url("{{PRIMARY_URL}}");
+  background-size: cover;
+  background-position: 70% 45%;
+  background-repeat: no-repeat;
+  padding: 48px 32px 72px;
+}
+
+.brand-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.brand-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--brand-on-header);
+  border: 0;
+  padding: 32px 28px 24px;
+  text-decoration: none !important;
+  color: var(--brand-header) !important;
+  min-height: 200px;
+  border-radius: 4px;
+}
+
+.brand-card:hover {
+  box-shadow: 0 12px 32px rgba(168, 249, 50, 0.18);
+}
+
+.brand-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--brand-header) !important;
+}
+
+.brand-card p {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--brand-muted);
+  flex: 1;
+  margin: 0 0 16px;
+}
+
+.brand-card-cta {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--brand-header);
+}
+
+.brand-card:hover .brand-card-cta {
+  color: var(--brand-header);
+}
+
+.brand-close {
+  background: var(--brand-header);
+  text-align: center;
+  padding: 48px 32px 64px;
+}
+
+.brand-feature {
+  background: var(--brand-header);
+  padding: 40px 28px;
+  border-left: 4px solid var(--brand-accent);
+  font-family: var(--brand-font);
+  color: var(--brand-on-header);
+}
+
+.brand-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin: 0 0 16px;
+}
+
+.brand-kicker-dark {
+  color: var(--brand-accent);
+}
+
+.quickLinksTitle {
+  display: none !important;
+}
+
+[class*="navigationTabset"],
+[class*="NavigationTabset"],
+runtime_sales_prm-navigation-tabset-container,
+#placeholderBanner,
+.themeHero,
+.cb-section_hero {
+  display: none !important;
+}
+
+.themeFooter,
+.cb-section_footer {
+  background: var(--brand-header) !important;
+}
+
+/* Login: Identity draws the frame with .cCenterPanel::before using
+   CardBackgroundColor (was white; now glass). Kill the pseudo so the
+   panel itself is the only card. Body class is comm-page-login-home. */
+html:has(.brand-login-brand),
+html:has(.brand-login-topbar),
+body.comm-page-login-home {
+  --lwc-colorBackground: rgba(8, 8, 8, 0.82);
+  --lwc-colorBackgroundAlt: rgba(8, 8, 8, 0.82);
+  --lwc-colorBackgroundLight: rgba(8, 8, 8, 0.82);
+  --lwc-CardBackgroundColor: rgba(8, 8, 8, 0.82);
+}
+
+.salesforceIdentityLoginBody2 .cCenterPanel::before,
+div.cCenterPanel:has(.brand-login-brand)::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.salesforceIdentityLoginBody2 .cCenterPanel,
+div.cCenterPanel:has(.brand-login-brand) {
+  background-color: rgba(8, 8, 8, 0.82) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  padding: 40px 36px !important;
+  max-width: 28rem;
+  margin: 48px 40px !important;
+}
+
+.salesforceIdentityLoginBody2 .cCenterPanel .siteforceContentArea,
+.salesforceIdentityLoginBody2 .cCenterPanel .slds-col--padded,
+.salesforceIdentityLoginBody2 .cCenterPanel .ui-widget {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.salesforceIdentityLoginForm2 .inputContainer {
+  background-color: #2d2f33 !important;
+  border: 1px solid #333333 !important;
+  border-radius: 999px !important;
+}
+
+.salesforceIdentityLoginForm2 .inputBox,
+.salesforceIdentityLoginBody2 .inputBox {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.salesforceIdentityLoginForm2 .loginButton,
+.salesforceIdentityLoginBody2 .slds-button--brand {
+  background-color: var(--brand-accent) !important;
+  background-image: none !important;
+  border-color: var(--brand-accent) !important;
+  color: var(--brand-header) !important;
+  border-radius: 999px !important;
+}
+
+.brand-login-topbar {
+  display: flex;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.brand-login-topbar img {
+  height: 28px !important;
+  width: auto !important;
+  max-width: 140px !important;
+  object-fit: contain !important;
+}
+
+.brand-login-topbar span {
+  font-family: var(--brand-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin-left: auto;
+}
+
+.brand-login-brand {
+  margin: 0 0 28px;
+  font-family: var(--brand-font);
+}
+
+.brand-login-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  margin: 0 0 16px;
+}
+
+.brand-login-title {
+  font-family: var(--brand-font) !important;
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--brand-on-header) !important;
+  margin: 0 0 8px;
+}
+
+.brand-login-sub {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--brand-muted);
+  margin: 0 0 8px;
+}
+
+.brand-login-brand ~ * input {
+  background: var(--brand-header) !important;
+  color: var(--brand-on-header) !important;
+  border: 1px solid #333 !important;
+}
+
+.brand-login-brand ~ * button,
+.brand-login-brand ~ * .uiButton {
+  background: var(--brand-accent) !important;
+  border-color: var(--brand-accent) !important;
+  color: var(--brand-header) !important;
+  border-radius: 999px !important;
+}
+
+.brand-login-brand ~ * a {
+  color: var(--brand-accent) !important;
+}
+
+.runtime_pipeline_inspectorPipelineInspectorHomeExperienceContainer .commonListContainer {
+  min-height: 575px !important;
+}
+
+/* Product Discovery / Configure & Quote overlay: never lime text on white */
+lightning-flow,
+lightning-overlay-container,
+runtime_revenue_products-prd-lst-container,
+.slds-modal {
+  --dxp-g-brand: #111111;
+  --lwc-brandPrimary: #111111;
+  --lwc-colorTextBrand: #111111;
+  --slds-c-button-outline-brand-color-border: #111111;
+  --slds-c-button-outline-brand-text-color: #111111;
+  --slds-c-button-brand-color-background: #111111;
+  --slds-c-button-brand-text-color: #ffffff;
+}
+
+lightning-flow .slds-button_outline-brand,
+lightning-overlay-container .slds-button_outline-brand,
+.slds-modal .slds-button_outline-brand,
+runtime_revenue_products-prd-lst-container .slds-button_outline-brand {
+  color: #111111 !important;
+  border-color: #111111 !important;
+  background: #ffffff !important;
+}
+
+lightning-flow .slds-button_brand,
+lightning-overlay-container .slds-button_brand,
+.slds-modal .slds-button_brand,
+runtime_revenue_products-prd-lst-container .slds-button_brand {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+
+

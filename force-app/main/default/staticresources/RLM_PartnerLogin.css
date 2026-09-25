@@ -1,0 +1,68 @@
+/* Login-only. Loaded via seoAssistant customHeadTags — not Picasso-filtered
+   theme CSS, so it can restyle Identity's .cCenterPanel white frame. */
+
+:root {
+  --lwc-colorBackground: transparent;
+  --lwc-colorBackgroundAlt: transparent;
+  --lwc-colorBackgroundLight: transparent;
+  --slds-c-card-color-background: transparent;
+  --dxp-g-neutral: transparent;
+  --dxp-g-root: transparent;
+}
+
+.ui-widget,
+.ui-widget-content {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.cCenterPanel {
+  background-color: rgba(8, 8, 8, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+  max-width: 28rem !important;
+  padding: 40px 36px 36px !important;
+  margin: 48px auto 48px 6% !important;
+  backdrop-filter: blur(8px);
+}
+
+.cCenterPanel .slds-scope,
+.cCenterPanel .slds-col,
+.cCenterPanel .slds-grid,
+.cCenterPanel .ui-widget,
+.cCenterPanel .ui-widget-content,
+.cCenterPanel .themeLayout,
+.cCenterPanel .siteforceContentArea,
+.cCenterPanel .container,
+.cCenterPanel .panel,
+.cCenterPanel .content {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.cCenterPanel input,
+.cCenterPanel input[type="text"],
+.cCenterPanel input[type="password"],
+.cCenterPanel .slds-input {
+  background: #2d2f33 !important;
+  color: #ffffff !important;
+  border: 1px solid #333333 !important;
+}
+
+.cCenterPanel input::placeholder {
+  color: #c3c6cc !important;
+}
+
+.cCenterPanel button,
+.cCenterPanel .uiButton,
+.cCenterPanel .slds-button {
+  background: var(--brand-accent, #0176d3) !important;
+  border-color: var(--brand-accent, #0176d3) !important;
+  color: #000000 !important;
+  border-radius: 999px !important;
+}
+
+.cCenterPanel a {
+  color: var(--brand-accent, #0176d3) !important;
+}
